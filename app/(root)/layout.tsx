@@ -5,7 +5,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const loggedIn = { firstName: "Marco", LastName: "Sanchez" };
+  const loggedIn = {
+    firstName: "Marco",
+    $id: "string",
+    email: "string",
+    userId: "string",
+    dwollaCustomerUrl: "string",
+    dwollaCustomerId: "string",
+    lastName: "Sanchez",
+    address1: "string",
+    city: "string",
+    state: "string",
+    postalCode: "string",
+    dateOfBirth: "string",
+    ssn: "string",
+  };
 
   return (
     <main
