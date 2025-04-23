@@ -22,10 +22,7 @@ export default function RootLayout({
   };
 
   return (
-    <main
-      className="flex h-screen w-full font-inter"
-      style={{ border: "5px solid red" }}
-    >
+    <main className="flex h-screen w-full font-inter" style={{}}>
       <Sidebar user={loggedIn} />
       {children}
     </main>
