@@ -7,6 +7,17 @@ const Home = () => {
     firstName: "Marco",
     lastName: "Sánchez",
     email: "marcos.sanchez.dev@gmail.com",
+    $id: "",
+    userId: "",
+    dwollaCustomerUrl: "",
+    dwollaCustomerId: "",
+    name: "",
+    address1: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    dateOfBirth: "",
+    ssn: "",
   };
 
   return (
@@ -31,7 +42,46 @@ const Home = () => {
       <RigthSidebar
         user={loggedIn}
         transactions={[]}
-        banks={[{ currentBalance: 123.05 }, { currentBalance: 321.01 }]}
+        banks={[
+          {
+            $id: "",
+            accountId: "",
+            bankId: "",
+            accessToken: "",
+            fundingSourceUrl: "",
+            userId: "",
+            sharableId: "",
+            id: "",
+            availableBalance: 0,
+            currentBalance: 123.05,
+            officialName: "",
+            mask: "",
+            institutionId: "",
+            name: "",
+            type: "",
+            subtype: "",
+            appwriteItemId: "",
+          },
+          {
+            $id: "",
+            accountId: "",
+            bankId: "",
+            accessToken: "",
+            fundingSourceUrl: "",
+            userId: "",
+            sharableId: "",
+            id: "",
+            availableBalance: 0,
+            currentBalance: 321.01,
+            officialName: "",
+            mask: "",
+            institutionId: "",
+            name: "",
+            type: "",
+            subtype: "",
+            appwriteItemId: "",
+          },
+        ]}
       />
     </section>
   );
