@@ -72,14 +72,21 @@ const AuthForm = ({ type }: { type: string }) => {
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <Custom
+              <CustomInput
                 Input
                 control={form.control}
-                name="firstName"
-                label="First Name"
-                placeholder="Enter your first name"
+                name="email"
+                label="Email"
+                placeholder="Enter your email"
               />
-              <FormField
+              <CustomInput
+                Input
+                control={form.control}
+                name="password"
+                label="Password"
+                placeholder="Enter your password"
+              />
+              {/* <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
@@ -106,7 +113,7 @@ const AuthForm = ({ type }: { type: string }) => {
                   //     <FormMessage className="text-red-600 font-bold" />
                   //   </FormItem>
                 )}
-              />
+              /> */}
               <Button type="submit">Submit</Button>
             </form>
           </Form>
