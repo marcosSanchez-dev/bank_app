@@ -23,12 +23,14 @@ const AuthForm = ({ type }: { type: string }) => {
 
   const formSchema = z.object({
     email: z.string().email(),
+    password: z.string().min(8),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
@@ -73,14 +75,12 @@ const AuthForm = ({ type }: { type: string }) => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <CustomInput
-                Input
                 control={form.control}
                 name="email"
                 label="Email"
                 placeholder="Enter your email"
               />
               <CustomInput
-                Input
                 control={form.control}
                 name="password"
                 label="Password"
