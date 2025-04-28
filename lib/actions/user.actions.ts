@@ -38,6 +38,7 @@ export const getUserInfo = async ({ userId }: getUserInfoProps) => {
 };
 
 export const signIn = async ({ email, password }: signInProps) => {
+  /*
   try {
     const { account } = await createAdminClient();
     const session = await account.createEmailPasswordSession(email, password);
@@ -55,9 +56,11 @@ export const signIn = async ({ email, password }: signInProps) => {
   } catch (error) {
     console.error("Error", error);
   }
+    */
 };
 
 export const signUp = async ({ password, ...userData }: SignUpParams) => {
+  /*
   const { email, firstName, lastName } = userData;
 
   let newUserAccount;
@@ -108,6 +111,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
   } catch (error) {
     console.error("Error", error);
   }
+  */
 };
 
 export async function getLoggedInUser() {
@@ -125,6 +129,7 @@ export async function getLoggedInUser() {
 }
 
 export const logoutAccount = async () => {
+  /*
   try {
     const { account } = await createSessionClient();
 
@@ -134,6 +139,7 @@ export const logoutAccount = async () => {
   } catch (error) {
     return null;
   }
+    */
 };
 
 export const createLinkToken = async (user: User) => {
