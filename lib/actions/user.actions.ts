@@ -168,8 +168,8 @@ export const createBankAccount = async ({
   accountId,
   accessToken,
   fundingSourceUrl,
-  shareableId,
-}: createBankAccountProps) => {
+}: // shareableId,
+createBankAccountProps) => {
   try {
     const { database } = await createAdminClient();
 
@@ -183,7 +183,7 @@ export const createBankAccount = async ({
         accountId,
         accessToken,
         fundingSourceUrl,
-        shareableId,
+        // shareableId,
       }
     );
 
