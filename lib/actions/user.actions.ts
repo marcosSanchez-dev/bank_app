@@ -60,13 +60,15 @@ export const signIn = async ({ email, password }: signInProps) => {
 };
 
 export const signUp = async ({ password, ...userData }: SignUpParams) => {
-  /*
+  console.log("entre al signUp");
   const { email, firstName, lastName } = userData;
 
   let newUserAccount;
 
   try {
-    const { account, database } = await createAdminClient();
+    console.log("entre al try");
+
+    const { account } = await createAdminClient();
 
     newUserAccount = await account.create(
       ID.unique(),
@@ -77,6 +79,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 
     if (!newUserAccount) throw new Error("Error creating user");
 
+    /*
     const dwollaCustomerUrl = await createDwollaCustomer({
       ...userData,
       type: "personal",
@@ -98,20 +101,20 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
       }
     );
 
+    */
     const session = await account.createEmailPasswordSession(email, password);
 
-    cookies().set("appwrite-session", session.secret, {
+    (await cookies()).set("appwrite-session", session.secret, {
       path: "/",
       httpOnly: true,
       sameSite: "strict",
       secure: true,
     });
 
-    return parseStringify(newUser);
+    return parseStringify(newUserAccount);
   } catch (error) {
     console.error("Error", error);
   }
-  */
 };
 
 export async function getLoggedInUser() {
