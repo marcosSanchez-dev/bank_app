@@ -1,24 +1,10 @@
 import HeaderBox from "@/components/HeaderBox";
 import RigthSidebar from "@/components/RigthSidebar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 
-const Home = () => {
-  const loggedIn = {
-    firstName: "Marco",
-    lastName: "Sánchez",
-    email: "marcos.sanchez.dev@gmail.com",
-    $id: "",
-    userId: "",
-    dwollaCustomerUrl: "",
-    dwollaCustomerId: "",
-    name: "",
-    address1: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    dateOfBirth: "",
-    ssn: "",
-  };
+const Home = async () => {
+  const loggedIn = await getLoggedInUser();
 
   return (
     <section className="home">
@@ -27,7 +13,7 @@ const Home = () => {
           <HeaderBox
             type="greeting"
             title="Hola"
-            user={loggedIn?.firstName || "Guest"}
+            user={loggedIn?.name || "Guest"}
             subtext="Welcome to the Banking App"
           />
 

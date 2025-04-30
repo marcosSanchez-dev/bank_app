@@ -1,29 +1,19 @@
 // "use client";
 import MobileNav from "@/components/MobileNav";
 import Sidebar from "@/components/Sidebar";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 // import { useEffect, useState } from "react";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const loggedIn = {
-    firstName: "Marco",
-    $id: "string",
-    email: "string",
-    userId: "string",
-    dwollaCustomerUrl: "string",
-    dwollaCustomerId: "string",
-    lastName: "Sanchez",
-    address1: "string",
-    city: "string",
-    state: "string",
-    postalCode: "string",
-    dateOfBirth: "string",
-    ssn: "string",
-  };
+  const loggedIn = await getLoggedInUser();
+
+  if (!loggedIn) redirect("/sign-in");
 
   // const [isMounted, setIsMounted] = useState(false);
 

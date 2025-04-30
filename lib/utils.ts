@@ -133,6 +133,7 @@ export function getAccountTypeColors(type: AccountTypes) {
 export function countTransactionCategories(
   transactions: Transaction[]
 ): CategoryCount[] {
+  /*
   const categoryCounts: { [category: string]: number } = {};
   let totalCount = 0;
 
@@ -167,6 +168,8 @@ export function countTransactionCategories(
   aggregatedCategories.sort((a, b) => b.count - a.count);
 
   return aggregatedCategories;
+  */
+  return [];
 }
 
 export function extractCustomerIdFromUrl(url: string) {

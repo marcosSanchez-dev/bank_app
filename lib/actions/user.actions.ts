@@ -38,35 +38,31 @@ export const getUserInfo = async ({ userId }: getUserInfoProps) => {
 };
 
 export const signIn = async ({ email, password }: signInProps) => {
-  /*
   try {
     const { account } = await createAdminClient();
     const session = await account.createEmailPasswordSession(email, password);
 
-    cookies().set("appwrite-session", session.secret, {
+    (await cookies()).set("appwrite-session", session.secret, {
       path: "/",
       httpOnly: true,
       sameSite: "strict",
       secure: true,
     });
 
-    const user = await getUserInfo({ userId: session.userId });
+    // const user = await getUserInfo({ userId: session.userId });
 
-    return parseStringify(user);
+    return parseStringify(session);
   } catch (error) {
     console.error("Error", error);
   }
-    */
 };
 
 export const signUp = async ({ password, ...userData }: SignUpParams) => {
-  console.log("entre al signUp");
   const { email, firstName, lastName } = userData;
 
   let newUserAccount;
 
   try {
-
     const { account } = await createAdminClient();
 
     newUserAccount = await account.create(
@@ -121,9 +117,9 @@ export async function getLoggedInUser() {
     const { account } = await createSessionClient();
     const result = await account.get();
 
-    const user = await getUserInfo({ userId: result.$id });
+    // const user = await getUserInfo({ userId: result.$id });
 
-    return parseStringify(user);
+    return parseStringify(result);
   } catch (error) {
     console.log(error);
     return null;
@@ -131,17 +127,17 @@ export async function getLoggedInUser() {
 }
 
 export const logoutAccount = async () => {
-  /*
   try {
     const { account } = await createSessionClient();
 
-    cookies().delete("appwrite-session");
+    (await cookies()).delete("appwrite-session");
 
     await account.deleteSession("current");
   } catch (error) {
+    console.log("logoutAccount error: ", error);
+
     return null;
   }
-    */
 };
 
 export const createLinkToken = async (user: User) => {
