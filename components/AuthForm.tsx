@@ -48,9 +48,6 @@ const AuthForm = ({ type }: { type: string }) => {
           password: data.password,
         };
 
-        console.log("mandare a llamar a signUps");
-
-        console.log("userData: ", userData);
         const newUser = await signUp(userData);
 
         setUser(newUser);
