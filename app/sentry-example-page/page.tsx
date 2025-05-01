@@ -47,17 +47,23 @@ export default function Page() {
 
         <p className="description">
           On this page, Sentry records your interaction as you trigger a test
-          error. I will share the recorded session on my{" "}
+          error (frontend). I will share the recorded session on my{" "}
           <a href="https://www.linkedin.com/in/marcos-web-dev/" target="_blank">
             LinkedIn
           </a>{" "}
           to show how Sentry works in real time. <br />
           <br />
-          • Click the button below to send an error. <br />• Or explore the app
-          by <a href="/sign-in">signing in</a> or{" "}
-          <a href="/sign-up">signing up</a>. <br />
+          Please do some wild mouse movements around the page{" "}
+          <strong>before</strong> and <strong>after</strong> you click the
+          button so you can spot yourself in the video!
           <br />
-          Thank you for helping me demonstrate Sentry’s power!
+          <br />
+          • Click the button below to send an error.
+          <br />• Or explore the app by <a href="/sign-in">
+            signing in
+          </a> or <a href="/sign-up">signing up</a>.<br />
+          <br />
+          Thanks for helping me demonstrate Sentry’s power!
         </p>
 
         <button
