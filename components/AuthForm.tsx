@@ -85,9 +85,21 @@ const AuthForm = ({ type }: { type: string }) => {
           <h1 className="text-24 lg:text-36 font-semibold text-gray-900">
             {user ? "Link Account" : type === "sign-in" ? "Sign In" : "Sign Up"}
             <p className="text-16 font-normal text-gray-600">
-              {user
-                ? "Link your account to get started"
-                : "Please enter your details"}
+              {user ? (
+                "Link your account to get started"
+              ) : (
+                <>
+                  <br />
+                  <p className="text-16 font-normal text-gray-600">
+                    This is a demo app made by me, Marcos Sanchez. <br />
+                    You can test it using this account:
+                    <br />- <strong>holamundo@gmail.com</strong> <br />-{" "}
+                    <strong>password: holamundo</strong> <br />
+                    <br />
+                    Or you can create a new one using the "Sign up" form.
+                  </p>
+                </>
+              )}
             </p>
           </h1>
         </div>
