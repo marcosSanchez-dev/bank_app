@@ -1,3 +1,4 @@
+import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -8,7 +9,16 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // ¡Sin configuraciones de serverActions aquí!
 };
 
-export default nextConfig;
+// Configuración condicional para Turbopack
+export default process.env.TURBOPACK
+  ? nextConfig
+  : withSentryConfig(nextConfig, {
+      org: "illuminv",
+      project: "javascript-nextjs",
+      silent: !process.env.CI,
+      widenClientFileUpload: true,
+      disableLogger: true,
+      automaticVercelMonitors: true,
+    });
