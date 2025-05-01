@@ -46,14 +46,18 @@ export default function Page() {
         <h1>sentry-example-page</h1>
 
         <p className="description">
-          This page sends a test error to my Sentry account, and I will share it
-          on my{" "}
+          On this page, Sentry records your interaction as you trigger a test
+          error. I will share the recorded session on my{" "}
           <a href="https://www.linkedin.com/in/marcos-web-dev/" target="_blank">
             LinkedIn
-          </a>
-          . You can send an error by clicking the button below, or you can
-          explore the app by <a href="/sign-in">signing in</a> or{" "}
-          <a href="/sign-up">signing up</a>. Thank you for your help!
+          </a>{" "}
+          to show how Sentry works in real time. <br />
+          <br />
+          • Click the button below to send an error. <br />• Or explore the app
+          by <a href="/sign-in">signing in</a> or{" "}
+          <a href="/sign-up">signing up</a>. <br />
+          <br />
+          Thank you for helping me demonstrate Sentry’s power!
         </p>
 
         <button
