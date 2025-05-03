@@ -11,7 +11,7 @@ import CustomInput from "./CustomInput";
 import { Loader2 } from "lucide-react";
 import { authFormSchema } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { getLoggedInUser, signIn, signUp } from "@/lib/actions/user.actions";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
@@ -31,8 +31,6 @@ const AuthForm = ({ type }: { type: string }) => {
     setIsLoading(true);
 
     try {
-      // Sign up with Appwrite & create plaid token
-
       if (type === "sign-up") {
         const userData = {
           firstName: data.firstName!,
@@ -48,7 +46,6 @@ const AuthForm = ({ type }: { type: string }) => {
         };
 
         const newUser = await signUp(userData);
-
         setUser(newUser);
       }
 
@@ -84,24 +81,25 @@ const AuthForm = ({ type }: { type: string }) => {
         <div className="flex flex-col gap-1 md:gap-3">
           <h1 className="text-24 lg:text-36 font-semibold text-gray-900">
             {user ? "Link Account" : type === "sign-in" ? "Sign In" : "Sign Up"}
-            <p className="text-16 font-normal text-gray-600">
-              {user ? (
-                "Link your account to get started"
-              ) : (
-                <>
-                  <br />
-                  <p className="text-16 font-normal text-gray-600">
-                    This is a demo app made by me, Marcos Sanchez. <br />
-                    You can test it using this account:
-                    <br />- <strong>holamundo@gmail.com</strong> <br />-{" "}
-                    <strong>password: holamundo</strong> <br />
-                    <br />
-                    Or you can create a new one using the "Sign up" form.
-                  </p>
-                </>
-              )}
-            </p>
           </h1>
+          <div className="text-16 font-normal text-gray-600">
+            {user ? (
+              <p>Link your account to get started</p>
+            ) : (
+              <>
+                <p>
+                  This is a demo app made by me, Marcos Sanchez. <br />
+                  You can test it using this account:
+                  <br />- <strong>holamundo@gmail.com</strong> <br />-{" "}
+                  <strong>password: holamundo</strong>
+                </p>
+                <p>
+                  Or you can create a new one using the &quot;Sign up&quot;
+                  form.
+                </p>
+              </>
+            )}
+          </div>
         </div>
       </header>
       {user ? (
@@ -120,12 +118,14 @@ const AuthForm = ({ type }: { type: string }) => {
                       name="firstName"
                       label="First Name"
                       placeholder="Enter your first name"
+                      autocomplete="given-name"
                     />
                     <CustomInput
                       control={form.control}
                       name="lastName"
                       label="Last Name"
-                      placeholder="Enter your first name"
+                      placeholder="Enter your last name"
+                      autocomplete="family-name"
                     />
                   </div>
                   <CustomInput
@@ -133,12 +133,14 @@ const AuthForm = ({ type }: { type: string }) => {
                     name="address1"
                     label="Address"
                     placeholder="Enter your specific address"
+                    autocomplete="street-address"
                   />
                   <CustomInput
                     control={form.control}
                     name="city"
                     label="City"
                     placeholder="Enter your city"
+                    autocomplete="address-level2"
                   />
                   <div className="flex gap-4">
                     <CustomInput
@@ -146,12 +148,14 @@ const AuthForm = ({ type }: { type: string }) => {
                       name="state"
                       label="State"
                       placeholder="Example: NY"
+                      autocomplete="address-level1"
                     />
                     <CustomInput
                       control={form.control}
                       name="postalCode"
                       label="Postal Code"
                       placeholder="Example: 11101"
+                      autocomplete="postal-code"
                     />
                   </div>
                   <div className="flex gap-4">
@@ -160,12 +164,14 @@ const AuthForm = ({ type }: { type: string }) => {
                       name="dateOfBirth"
                       label="Date of Birth"
                       placeholder="YYYY-MM-DD"
+                      autocomplete="bday"
                     />
                     <CustomInput
                       control={form.control}
                       name="ssn"
                       label="SSN"
                       placeholder="Example: 1234"
+                      autocomplete="off"
                     />
                   </div>
                 </>
@@ -175,41 +181,15 @@ const AuthForm = ({ type }: { type: string }) => {
                 name="email"
                 label="Email"
                 placeholder="Enter your email"
+                autocomplete="email"
               />
               <CustomInput
                 control={form.control}
                 name="password"
                 label="Password"
                 placeholder="Enter your password"
+                autocomplete="current-password"
               />
-              {/* <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <div className="form-item">
-                    <FormLabel className="form-label">Email</FormLabel>
-                    <div className="flex w-full flex-col">
-                      <FormControl>
-                        <Input
-                          placeholder="hola mundo"
-                          className="input-class"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="form-message mt-2" />
-                    </div>
-                  </div>
-                  //   <FormItem>
-                  //     <FormControl>
-                  //       <Input placeholder="hola mundo" {...field} />
-                  //     </FormControl>
-                  //     <FormDescription>
-                  //       This is your public display name.
-                  //     </FormDescription>
-                  //     <FormMessage className="text-red-600 font-bold" />
-                  //   </FormItem>
-                )}
-              /> */}
 
               <div className="flex flex-col gap-4">
                 <Button type="submit" className="form-btn" disabled={isLoading}>
@@ -227,98 +207,6 @@ const AuthForm = ({ type }: { type: string }) => {
               </div>
             </form>
           </Form>
-
-          {/* <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              {type === "sign-up" && (
-                <>
-                  <div className="flex gap-4">
-                    <CustomInput
-                      control={form.control}
-                      name="firstName"
-                      label="First Name"
-                      placeholder="Enter your first name"
-                    />
-                    <CustomInput
-                      control={form.control}
-                      name="lastName"
-                      label="Last Name"
-                      placeholder="Enter your first name"
-                    />
-                  </div>
-                  <CustomInput
-                    control={form.control}
-                    name="address1"
-                    label="Address"
-                    placeholder="Enter your specific address"
-                  />
-                  <CustomInput
-                    control={form.control}
-                    name="city"
-                    label="City"
-                    placeholder="Enter your city"
-                  />
-                  <div className="flex gap-4">
-                    <CustomInput
-                      control={form.control}
-                      name="state"
-                      label="State"
-                      placeholder="Example: NY"
-                    />
-                    <CustomInput
-                      control={form.control}
-                      name="postalCode"
-                      label="Postal Code"
-                      placeholder="Example: 11101"
-                    />
-                  </div>
-                  <div className="flex gap-4">
-                    <CustomInput
-                      control={form.control}
-                      name="dateOfBirth"
-                      label="Date of Birth"
-                      placeholder="YYYY-MM-DD"
-                    />
-                    <CustomInput
-                      control={form.control}
-                      name="ssn"
-                      label="SSN"
-                      placeholder="Example: 1234"
-                    />
-                  </div>
-                </>
-              )}
-
-              <CustomInput
-                control={form.control}
-                name="email"
-                label="Email"
-                placeholder="Enter your email"
-              />
-
-              <CustomInput
-                control={form.control}
-                name="password"
-                label="Password"
-                placeholder="Enter your password"
-              />
-
-              <div className="flex flex-col gap-4">
-                <Button type="submit" disabled={isLoading} className="form-btn">
-                  {isLoading ? (
-                    <>
-                      <Loader2 size={20} className="animate-spin" /> &nbsp;
-                      Loading...
-                    </>
-                  ) : type === "sign-in" ? (
-                    "Sign In"
-                  ) : (
-                    "Sign Up"
-                  )}
-                </Button>
-              </div>
-            </form>
-          </Form> */}
 
           <footer className="flex justify-center gap-1">
             <p className="text-14 font-normal text-gray-600">
