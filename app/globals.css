@@ -8,6 +8,15 @@
   box-sizing: border-box;
 }
 
+canvas {
+  touch-action: none;
+}
+
+.auth-asset {
+  position: relative;
+  overflow: hidden;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
