@@ -1,4 +1,3 @@
-// components/AuthSceneWrapper.tsx
 "use client";
 
 import dynamic from "next/dynamic";
@@ -13,7 +12,7 @@ const AuthScene = dynamic(() => import("@/components/AuthScene"), {
 
 export default function AuthSceneWrapper() {
   return (
-    <div className="relative h-screen w-full flex-1">
+    <div className="relative h-full w-full" style={{ width: "50vw" }}>
       <AuthScene />
       <motion.div
         className="absolute bottom-8 left-8 right-8 flex items-center gap-4"

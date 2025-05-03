@@ -1,4 +1,3 @@
-// components/AuthScene.tsx
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
@@ -48,7 +47,6 @@ function VortexParticles() {
         positions[i + 1] = newRadius * Math.sin(angle + delta * 0.5);
         positions[i + 2] = z * 0.99;
 
-        // Interacción mejorada con el mouse
         const dx = x - mouse[0] * 5;
         const dy = y - mouse[1] * 5;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -67,9 +65,8 @@ function VortexParticles() {
       ref={points}
       positions={new Float32Array(particles)}
       onPointerMove={(e) => {
-        // Corrección clave: Verificar existencia de e.uv
         if (e.uv) {
-          setMouse([e.uv.x - 0.5, 1 - e.uv.y - 0.5]); // Corrección coordenada Y
+          setMouse([e.uv.x - 0.5, 1 - e.uv.y - 0.5]);
         }
       }}
     >
@@ -99,19 +96,47 @@ function Effects() {
 }
 
 export default function AuthScene() {
-  return (
-    <Canvas
-      camera={{ position: [0, 0, 10], fov: 75 }}
-      className="rounded-l-xl bg-gradient-to-br from-indigo-900 to-blue-900"
-      onCreated={({ gl }) => {
-        gl.setClearColor(new THREE.Color("#0f172a"));
-      }}
-    >
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
+  const containerRef = useRef<HTMLDivElement>(null);
 
-      <VortexParticles />
-      <Effects />
-    </Canvas>
+  return (
+    <div ref={containerRef} className="w-full h-full">
+      <Canvas
+        camera={{ position: [0, 0, 10], fov: 75 }}
+        className="rounded-l-xl bg-gradient-to-br from-indigo-900 to-blue-900"
+        onCreated={({ gl, camera }) => {
+          gl.setClearColor(new THREE.Color("#0f172a"));
+
+          const updateSize = () => {
+            if (
+              containerRef.current &&
+              camera instanceof THREE.PerspectiveCamera
+            ) {
+              const width = containerRef.current.clientWidth;
+              const height = containerRef.current.clientHeight;
+
+              camera.aspect = width / height;
+              camera.updateProjectionMatrix();
+              gl.setSize(width, height);
+              gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            }
+          };
+
+          const resizeObserver = new ResizeObserver(updateSize);
+          if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+          }
+
+          // Actualización inicial
+          updateSize();
+
+          return () => resizeObserver.disconnect();
+        }}
+      >
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={1} />
+        <VortexParticles />
+        <Effects />
+      </Canvas>
+    </div>
   );
 }
