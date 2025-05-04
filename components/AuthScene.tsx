@@ -102,7 +102,7 @@ export default function AuthScene() {
     <div ref={containerRef} className="w-full h-full">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 75 }}
-        className="rounded-l-xl bg-gradient-to-br from-indigo-900 to-blue-900"
+        className="bg-gradient-to-br from-indigo-900 to-blue-900"
         onCreated={({ gl, camera }) => {
           gl.setClearColor(new THREE.Color("#0f172a"));
 
