@@ -3,28 +3,24 @@
 import { Client } from "dwolla-v2";
 
 const getEnvironment = (): "production" | "sandbox" => {
-  // const environment = process.env.DWOLLA_ENV as string;
-  const environment = "sandbox";
-  return environment;
+  const environment = process.env.DWOLLA_ENV as string;
 
-  //   switch (environment) {
-  //     case "sandbox":
-  //       return "sandbox";
-  //     case "production":
-  //       return "production";
-  //     default:
-  //       throw new Error(
-  //         "Dwolla environment should either be set to `sandbox` or `production`"
-  //       );
-  //   }
+  switch (environment) {
+    case "sandbox":
+      return "sandbox";
+    case "production":
+      return "production";
+    default:
+      throw new Error(
+        "Dwolla environment should either be set to `sandbox` or `production`"
+      );
+  }
 };
 
 const dwollaClient = new Client({
   environment: getEnvironment(),
-  //   key: process.env.DWOLLA_KEY as string,
-  key: "",
-  //   secret: process.env.DWOLLA_SECRET as string,
-  secret: "",
+  key: process.env.DWOLLA_KEY as string,
+  secret: process.env.DWOLLA_SECRET as string,
 });
 
 // Create a Dwolla Funding Source using a Plaid Processor Token
@@ -55,16 +51,46 @@ export const createOnDemandAuthorization = async () => {
   }
 };
 
+// En tu dwolla.actions.ts (función createDwollaCustomer)
 export const createDwollaCustomer = async (
   newCustomer: NewDwollaCustomerParams
 ) => {
   try {
+    // Validar y formatear campos requeridos
+    const customerData = {
+      ...newCustomer,
+      state: newCustomer.state.toUpperCase(),
+      dateOfBirth: formatDateOfBirth(newCustomer.dateOfBirth),
+      ssn: sanitizeSSN(newCustomer.ssn),
+    };
+
+    console.log("Dwolla Customer Data:", customerData); // Para debug
+
     return await dwollaClient
-      .post("customers", newCustomer)
+      .post("customers", customerData)
       .then((res) => res.headers.get("location"));
   } catch (err) {
     console.error("Creating a Dwolla Customer Failed: ", err);
+    throw err; // Propagar el error para mejor manejo
   }
+};
+
+// Funciones de ayuda
+const formatDateOfBirth = (dob: string): string => {
+  const date = new Date(dob);
+  if (isNaN(date.getTime())) {
+    throw new Error("Formato de fecha inválido. Use YYYY-MM-DD");
+  }
+  return date.toISOString().split("T")[0];
+};
+
+const sanitizeSSN = (ssn: string): string => {
+  // Remover todos los caracteres no numéricos
+  const cleaned = ssn.replace(/\D/g, "");
+  if (cleaned.length !== 9) {
+    throw new Error("SSN debe contener exactamente 9 dígitos");
+  }
+  return cleaned;
 };
 
 export const createTransfer = async ({

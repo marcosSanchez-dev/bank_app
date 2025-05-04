@@ -49,21 +49,28 @@ export const signIn = async ({ email, password }: signInProps) => {
       secure: true,
     });
 
-    // const user = await getUserInfo({ userId: session.userId });
+    const user = await getUserInfo({ userId: session.userId });
 
-    return parseStringify(session);
+    return parseStringify(user);
   } catch (error) {
     console.error("Error", error);
   }
 };
 
 export const signUp = async ({ password, ...userData }: SignUpParams) => {
-  const { email, firstName, lastName } = userData;
+  const { email, firstName, lastName, state } = userData;
+
+  console.log("userData: ", userData);
+
+  // Validar formato del estado
+  if (!/^[A-Z]{2}$/.test(state)) {
+    throw new Error("El estado debe ser una abreviación de 2 letras");
+  }
 
   let newUserAccount;
 
   try {
-    const { account } = await createAdminClient();
+    const { account, database } = await createAdminClient();
 
     newUserAccount = await account.create(
       ID.unique(),
@@ -74,7 +81,6 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 
     if (!newUserAccount) throw new Error("Error creating user");
 
-    /*
     const dwollaCustomerUrl = await createDwollaCustomer({
       ...userData,
       type: "personal",
@@ -96,17 +102,16 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
       }
     );
 
-    */
-    const session = await account.createEmailPasswordSession(email, password);
+    // const session = await account.createEmailPasswordSession(email, password);
 
-    (await cookies()).set("appwrite-session", session.secret, {
-      path: "/",
-      httpOnly: true,
-      sameSite: "strict",
-      secure: true,
-    });
+    // (await cookies()).set("appwrite-session", session.secret, {
+    //   path: "/",
+    //   httpOnly: true,
+    //   sameSite: "strict",
+    //   secure: true,
+    // });
 
-    return parseStringify(newUserAccount);
+    return parseStringify(newUser);
   } catch (error) {
     console.error("Error", error);
   }
@@ -117,9 +122,9 @@ export async function getLoggedInUser() {
     const { account } = await createSessionClient();
     const result = await account.get();
 
-    // const user = await getUserInfo({ userId: result.$id });
+    const user = await getUserInfo({ userId: result.$id });
 
-    return parseStringify(result);
+    return parseStringify(user);
   } catch (error) {
     console.log(error);
     return null;
@@ -135,7 +140,6 @@ export const logoutAccount = async () => {
     await account.deleteSession("current");
   } catch (error) {
     console.log("logoutAccount error: ", error);
-
     return null;
   }
 };
@@ -166,8 +170,8 @@ export const createBankAccount = async ({
   accountId,
   accessToken,
   fundingSourceUrl,
-}: // shareableId,
-createBankAccountProps) => {
+  shareableId,
+}: createBankAccountProps) => {
   try {
     const { database } = await createAdminClient();
 
@@ -181,7 +185,7 @@ createBankAccountProps) => {
         accountId,
         accessToken,
         fundingSourceUrl,
-        // shareableId,
+        shareableId,
       }
     );
 
