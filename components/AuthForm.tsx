@@ -13,6 +13,7 @@ import { authFormSchema } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { signIn, signUp } from "@/lib/actions/user.actions";
 import { motion, AnimatePresence } from "framer-motion";
+import PlaidLink from "./PlaidLink";
 
 const ConstructionMessage = () => {
   const router = useRouter();
@@ -57,7 +58,6 @@ const ConstructionMessage = () => {
 
         <div className="flex items-center justify-center gap-2 text-sm text-green-600">
           <Lock className="h-4 w-4" />
-          <span>256-bit Encryption Active</span>
         </div>
       </div>
 
@@ -212,6 +212,7 @@ const AuthForm = ({ type }: { type: string }) => {
         {user ? (
           <div className="flex flex-col gap-4">
             <ConstructionMessage />
+            <PlaidLink user={user} variant="primary" />
           </div>
         ) : (
           <>

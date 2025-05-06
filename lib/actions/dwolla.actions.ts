@@ -64,8 +64,6 @@ export const createDwollaCustomer = async (
       ssn: sanitizeSSN(newCustomer.ssn),
     };
 
-    console.log("Dwolla Customer Data:", customerData); // Para debug
-
     return await dwollaClient
       .post("customers", customerData)
       .then((res) => res.headers.get("location"));
