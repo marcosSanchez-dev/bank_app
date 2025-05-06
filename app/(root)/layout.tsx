@@ -13,9 +13,7 @@ export default async function RootLayout({
 }>) {
   const loggedIn = await getLoggedInUser();
 
-  console.log("loggedIn: ", loggedIn);
-
-  // if (!loggedIn) redirect("/sign-in");
+  if (!loggedIn) redirect("/sign-in");
 
   // const [isMounted, setIsMounted] = useState(false);
 

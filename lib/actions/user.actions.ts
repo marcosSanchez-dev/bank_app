@@ -49,9 +49,8 @@ export const signIn = async ({ email, password }: signInProps) => {
       secure: true,
     });
 
-    const user = await getUserInfo({ userId: session.userId });
-
-    return parseStringify(user);
+    // const user = await getUserInfo({ userId: session.userId });
+    return parseStringify(session);
   } catch (error) {
     console.error("Error", error);
   }
@@ -59,8 +58,6 @@ export const signIn = async ({ email, password }: signInProps) => {
 
 export const signUp = async ({ password, ...userData }: SignUpParams) => {
   const { email, firstName, lastName, state } = userData;
-
-  console.log("userData: ", userData);
 
   // Validar formato del estado
   if (!/^[A-Z]{2}$/.test(state)) {
@@ -120,6 +117,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
+
     const result = await account.get();
 
     const user = await getUserInfo({ userId: result.$id });

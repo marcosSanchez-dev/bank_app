@@ -53,7 +53,7 @@ const Footer = ({ user, type = "desktop" }: FooterProps) => {
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200 }}
         >
-          {user?.name[0]}
+          {user?.firstName[0]}
         </motion.p>
 
         {/* Efecto de hover en el avatar */}
@@ -72,7 +72,7 @@ const Footer = ({ user, type = "desktop" }: FooterProps) => {
           className="text-14 truncate text-gray-700 font-semibold"
           whileHover={{ x: 5 }}
         >
-          {user?.name}
+          {user?.firstName}
         </motion.h1>
         <motion.p
           className="text-14 truncate font-normal text-gray-600"
