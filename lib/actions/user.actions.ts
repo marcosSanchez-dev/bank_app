@@ -49,20 +49,16 @@ export const signIn = async ({ email, password }: signInProps) => {
       secure: true,
     });
 
-    // const user = await getUserInfo({ userId: session.userId });
-    return parseStringify(session);
+    const user = await getUserInfo({ userId: session.userId });
+
+    return parseStringify(user);
   } catch (error) {
     console.error("Error", error);
   }
 };
 
 export const signUp = async ({ password, ...userData }: SignUpParams) => {
-  const { email, firstName, lastName, state } = userData;
-
-  // Validar formato del estado
-  if (!/^[A-Z]{2}$/.test(state)) {
-    throw new Error("El estado debe ser una abreviación de 2 letras");
-  }
+  const { email, firstName, lastName } = userData;
 
   let newUserAccount;
 
@@ -117,7 +113,6 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
-
     const result = await account.get();
 
     const user = await getUserInfo({ userId: result.$id });
