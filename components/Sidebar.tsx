@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Footer from "./Footer";
+import PlaidLink from "./PlaidLink";
 
 const sidebarVariants = {
   hidden: { x: -100, opacity: 0 },
@@ -123,7 +124,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
             })}
           </AnimatePresence>
         </div>
-        user
+        <PlaidLink user={user} />
       </nav>
 
       <Footer user={user} type="desktop" />
